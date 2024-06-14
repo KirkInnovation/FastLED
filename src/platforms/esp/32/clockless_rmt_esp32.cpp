@@ -333,7 +333,7 @@ void IRAM_ATTR ESP32RMTController::tx_start()
     RMT.int_ena.val |= (1 << mRMT_channel);
     // rmt_ll_tx_start(&RMT, mRMT_channel)
     RMT.chnconf0[mRMT_channel].conf_update_chn = 1;
-    RMT.chnconf0[mRMT_channel].tx_start_n = 1;
+    RMT.chnconf0[mRMT_channel].tx_start_chn = 1;
 #elif CONFIG_IDF_TARGET_ESP32S2 || CONFIG_IDF_TARGET_ESP32
     // rmt_ll_tx_reset_pointer(&RMT, mRMT_channel)
     RMT.conf_ch[mRMT_channel].conf1.mem_rd_rst = 1;
@@ -386,7 +386,7 @@ void IRAM_ATTR ESP32RMTController::doneOnChannel(rmt_channel_t channel, void * a
     // rmt_ll_enable_tx_end_interrupt(&RMT, channel)
     RMT.int_ena.val &= ~(1 << channel);
     // rmt_ll_tx_stop(&RMT, channel)
-    RMT.chnconf0[channel].tx_stop_n = 1;
+    RMT.chnconf0[channel].tx_stop_chn = 1;
     RMT.chnconf0[channel].conf_update_chn = 1;
     // rmt_ll_tx_reset_pointer(&RMT, channel)
     RMT.chnconf0[channel].mem_rd_rst_chn = 1;
